@@ -43,3 +43,6 @@ publicholiday_active{countryCode="DE",county="DE-BY",date="2019-01-06",fixed="tr
 publicholiday_active{countryCode="DE",county="DE-BY",date="2019-06-20",fixed="false",global="false",launchYear="0",localName="Fronleichnam",name="Corpus Christi",type="Public"} 0
 publicholiday_active{countryCode="DE",county="DE-BY",date="2019-11-01",fixed="true",global="false",launchYear="0",localName="Allerheiligen",name="All Saints' Day",type="Public"} 0
 ```
+
+
+The Public holidays are fetched from [date.nager](https://date.nager.at/)
