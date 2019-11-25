@@ -7,6 +7,20 @@ Public-holiday Exporter
 
 Prometheus exporter for public-holiday informations (countries with timezones...)
 
+Configuration
+-------------
+
+| Environment variable              | DefaultValue                | Description                |
+|-----------------------------------|-----------------------------|----------------------------|
+| `CONFIG`                          | `empty`                     | Config path                |
+| `SERVER_BIND`                     | `:8000`                     | Server address             |
+
+
+Configuration file
+------------------
+
+see [example.yaml](example.yaml)
+
 Example metrics
 ---------------
 
