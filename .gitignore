@@ -1,0 +1,4 @@
+/vendor/
+/public-holiday-exporter
+/*.exe
+/.idea

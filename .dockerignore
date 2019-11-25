@@ -1,0 +1,5 @@
+/Dockerfile
+/vendor/
+/public-holiday-exporter
+/example
+/*.exe

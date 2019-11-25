@@ -1,0 +1,9 @@
+countries:
+  - country: "DE"
+    timezone: "Europe/Berlin"
+  - country: "FR"
+    timezone: "Europe/Paris"
+  - country: "GB"
+    timezone: "Europe/London"
+  - country: "NZ"
+    timezone: "Pacific/Auckland"
