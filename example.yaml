@@ -7,3 +7,4 @@ countries:
     timezone: "Europe/London"
   - country: "NZ"
     timezone: "Pacific/Auckland"
+
