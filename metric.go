@@ -125,7 +125,7 @@ func (c *MetricCollector) Run() {
 				c.ensurePublicHolidays(country.CountryCode, year)
 				c.setCountryMetrics(country.CountryCode, year, todayDate, location)
 
-				if daysToNextYear > opts.ExporterDaysToFetchNewYear {
+				if daysToNextYear <= opts.ExporterDaysToFetchNewYear {
 					c.ensurePublicHolidays(country.CountryCode, year + 1 )
 					c.setCountryMetrics(country.CountryCode, year + 1 , todayDate, location)
 				}
