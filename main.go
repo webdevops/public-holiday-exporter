@@ -9,16 +9,15 @@ import (
 	"os"
 )
 
-const (
-	Version     = "0.3.0"
-)
-
 var (
 	argparser *flags.Parser
-	args      []string
 
 	Logger    *DaemonLogger
 	Verbose   bool
+
+	// Git version information
+	gitCommit = "<unknown>"
+	gitTag    = "<unknown>"
 )
 
 var opts struct {
@@ -42,7 +41,7 @@ func main() {
 	Logger = NewLogger(log.Lshortfile, Verbose)
 	defer Logger.Close()
 
-	Logger.Infof("Starting public-holiday exporter version %v", Version)
+	Logger.Infof("Starting public holiday exporter v%s (%s)", gitTag, gitCommit)
 
 	Logger.Infof("parsing configuration file %v", opts.ConfigPath)
 
