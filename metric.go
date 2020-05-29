@@ -42,7 +42,7 @@ func (c *MetricCollector) Setup() {
 	c.interval, _ = time.ParseDuration("30m")
 
 	c.restClient = resty.New()
-	c.restClient.SetHeader("User-Agent", "public-holiday-exporter/"+Version)
+	c.restClient.SetHeader("User-Agent", "public-holiday-exporter/"+gitTag)
 	c.restClient.SetHostURL("https://date.nager.at/api/v2/publicholidays/")
 	c.restClient.SetHeader("Accept", "application/json")
 
