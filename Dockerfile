@@ -9,6 +9,7 @@ RUN go mod download
 
 # Compile
 COPY ./ /go/src/github.com/webdevops/public-holiday-exporter
+RUN make test
 RUN make lint
 RUN make build
 RUN ./public-holiday-exporter --help
