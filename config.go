@@ -3,6 +3,8 @@ package main
 import (
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
+	log "github.com/sirupsen/logrus"
+
 )
 
 type (
@@ -22,14 +24,14 @@ func NewAppConfig(path string) (config Config) {
 
 	config = Config{}
 
-	Logger.Infof("reading configuration from file %v", path)
+	log.Infof("reading configuration from file %v", path)
 	if data, err := ioutil.ReadFile(path); err == nil {
 		filecontent = data
 	} else {
 		panic(err)
 	}
 
-	Logger.Info("parsing configuration")
+	log.Info("parsing configuration")
 	if err := yaml.Unmarshal(filecontent, &config); err != nil {
 		panic(err)
 	}

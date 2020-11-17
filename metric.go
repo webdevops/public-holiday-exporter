@@ -6,6 +6,7 @@ import (
 	"github.com/go-resty/resty/v2"
 	"github.com/prometheus/client_golang/prometheus"
 	"time"
+	log "github.com/sirupsen/logrus"
 )
 
 type (
@@ -103,7 +104,7 @@ func (c *MetricCollector) AddCountry(country, timezone string) {
 func (c *MetricCollector) Run() {
 	go func() {
 		for {
-			fmt.Println("Run...")
+			log.Info("starting...")
 			c.prometheus.publicHolidayActive.Reset()
 			c.prometheus.publicHolidayDate.Reset()
 
