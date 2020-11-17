@@ -2,10 +2,10 @@ Public-holiday Exporter
 ==================
 
 [![license](https://img.shields.io/github/license/webdevops/public-holiday-exporter.svg)](https://github.com/webdevops/public-holiday-exporter/blob/master/LICENSE)
-[![Docker](https://img.shields.io/badge/docker-webdevops%2Fpublic--holiday--exporter-blue.svg?longCache=true&style=flat&logo=docker)](https://hub.docker.com/r/webdevops/public-holiday-exporter/)
-[![Docker Build Status](https://img.shields.io/docker/cloud/build/webdevops/public-holiday-exporter)](https://hub.docker.com/r/webdevops/public-holiday-exporter/)
+[![DockerHub](https://img.shields.io/badge/DockerHub-webdevops%2Fpublic--holiday--exporter-blue)](https://hub.docker.com/r/webdevops/public-holiday-exporter/)
+[![Quay.io](https://img.shields.io/badge/Quay.io-webdevops%2Fpublic--holiday--exporter-blue)](https://quay.io/repository/webdevops/public-holiday-exporter)
 
-Prometheus exporter for public-holiday informations (countries with timezones...)
+Prometheus exporter for public-holiday information (countries with timezones...)
 
 Configuration
 -------------
