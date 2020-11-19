@@ -1,10 +1,9 @@
 package main
 
 import (
+	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
-	log "github.com/sirupsen/logrus"
-
 )
 
 type (
@@ -13,10 +12,9 @@ type (
 	}
 
 	ConfigCountry struct {
-		Country string `yaml:"country"`
+		Country  string `yaml:"country"`
 		Timezone string `yaml:"timezone"`
 	}
-
 )
 
 func NewAppConfig(path string) (config Config) {

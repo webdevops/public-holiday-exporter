@@ -38,7 +38,7 @@ func main() {
 	collector := NewMetricCollector()
 	for _, line := range config.Countries {
 		log.Infof("adding country %v with timezone %v", line.Country, line.Timezone)
-		collector.AddCountry(line.Country,line.Timezone)
+		collector.AddCountry(line.Country, line.Timezone)
 	}
 	collector.Run()
 

@@ -15,12 +15,12 @@ type (
 		}
 
 		// general options
-		ServerBind string `long:"bind"                env:"SERVER_BIND"   description:"Server address"                default:":8080"`
+		ServerBind string `long:"bind" env:"SERVER_BIND"   description:"Server address" default:":8080"`
 
 		ConfigPath string `long:"config" short:"c"  env:"CONFIG"   description:"Config path" required:"true"`
 
 		// exporter settings
-		ExporterDaysToFetchNewYear int64  `env:"DAYS_TO_NEXT_YEAR"   description:"days to next year to fetch also next years data" default:"30"`
+		ExporterDaysToFetchNewYear int64 `env:"DAYS_TO_NEXT_YEAR"   description:"days to next year to fetch also next years data" default:"30"`
 	}
 )
 

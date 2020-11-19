@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"github.com/go-resty/resty/v2"
 	"github.com/prometheus/client_golang/prometheus"
-	"time"
 	log "github.com/sirupsen/logrus"
+	"time"
 )
 
 type (
@@ -21,13 +21,13 @@ type (
 
 		prometheus struct {
 			publicHolidayActive *prometheus.GaugeVec
-			publicHolidayDate *prometheus.GaugeVec
+			publicHolidayDate   *prometheus.GaugeVec
 		}
 	}
 
 	MetricCollectorCountry struct {
 		CountryCode string
-		Timezone string
+		Timezone    string
 	}
 )
 
@@ -92,14 +92,13 @@ func (c *MetricCollector) Setup() {
 func (c *MetricCollector) AddCountry(country, timezone string) {
 	c.Countries = append(c.Countries, MetricCollectorCountry{
 		CountryCode: country,
-		Timezone: timezone,
+		Timezone:    timezone,
 	})
 
 	if _, ok := c.PublicHolidays[country]; !ok {
 		c.PublicHolidays[country] = map[int][]PublicHoliday{}
 	}
 }
-
 
 func (c *MetricCollector) Run() {
 	go func() {
@@ -109,7 +108,7 @@ func (c *MetricCollector) Run() {
 			c.prometheus.publicHolidayDate.Reset()
 
 			currentTime := time.Now()
-			nextYear := time.Date(currentTime.Year() + 1, 1, 1, 0, 0, 0, 0, currentTime.Location())
+			nextYear := time.Date(currentTime.Year()+1, 1, 1, 0, 0, 0, 0, currentTime.Location())
 			daysToNextYear := int64(nextYear.Sub(currentTime).Hours() / 24)
 
 			for _, country := range c.Countries {
@@ -127,8 +126,8 @@ func (c *MetricCollector) Run() {
 				c.setCountryMetrics(country.CountryCode, year, todayDate, location)
 
 				if daysToNextYear <= opts.ExporterDaysToFetchNewYear {
-					c.ensurePublicHolidays(country.CountryCode, year + 1 )
-					c.setCountryMetrics(country.CountryCode, year + 1 , todayDate, location)
+					c.ensurePublicHolidays(country.CountryCode, year+1)
+					c.setCountryMetrics(country.CountryCode, year+1, todayDate, location)
 				}
 			}
 
