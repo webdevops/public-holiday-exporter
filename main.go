@@ -40,6 +40,12 @@ func main() {
 		log.Infof("adding country %v with timezone %v", line.Country, line.Timezone)
 		collector.AddCountry(line.Country, line.Timezone)
 	}
+	
+	if opts.Cache.Path != "" {
+		if _, err := os.Stat(opts.Cache.Path); err == nil {
+			collector.LoadFromCache(opts.Cache.Path)
+		}
+	}
 
 	// check if preload only
 	// load data, save to cache and exit
@@ -51,12 +57,6 @@ func main() {
 
 		log.Info("preloading finished, exit")
 		os.Exit(0)
-	}
-
-	if opts.Cache.Path != "" {
-		if _, err := os.Stat(opts.Cache.Path); err == nil {
-			collector.LoadFromCache(opts.Cache.Path)
-		}
 	}
 
 	collector.Run()
