@@ -7,21 +7,46 @@ Public-holiday Exporter
 
 Prometheus exporter for public-holiday information (countries with timezones...)
 
-Configuration
--------------
+Usage
+-----
 
-| Environment variable              | DefaultValue                | Description                |
-|-----------------------------------|-----------------------------|----------------------------|
-| `CONFIG`                          | `empty`                     | Config path                |
-| `SERVER_BIND`                     | `:8000`                     | Server address             |
-| `DAYS_TO_NEXT_YEAR`               | `30`                        | days to next year to fetch also next years data  |
+```
+Usage:
+  public-holiday-exporter [OPTIONS]
 
+Application Options:
+      --debug       debug mode [$DEBUG]
+  -v, --verbose     verbose mode [$VERBOSE]
+      --log.json    Switch log output to json format [$LOG_JSON]
+      --cache.path= Cache path (default: cache.json) [$CACHE_PATH]
+      --preload     Do cache preload and exit
+      --bind=       Server address (default: :8080) [$SERVER_BIND]
+  -c, --config=     Config path [$CONFIG]
+
+Help Options:
+  -h, --help        Show this help message
+```
 
 
 Configuration file
 ------------------
 
 see [example.yaml](example.yaml)
+
+
+Preload
+-------
+
+as date.nager.at has a strict API limit please use the preload feature:
+
+Dockerfile:
+```
+FROM webdevops/public-holiday-exporter
+COPY example.yaml /config.yaml
+RUN ["/public-holiday-exporter", "--config=/config.yaml", "--preload"]
+```
+
+This will fetch the data for the current and next year and caches it inside the Docker image.
 
 Example metrics
 ---------------

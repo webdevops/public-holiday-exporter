@@ -30,7 +30,7 @@ var opts config.Opts
 func main() {
 	initArgparser()
 
-	log.Infof("starting public-holiday-exporter manager v%s (%s; %s; by %v)", gitTag, gitCommit, runtime.Version(), Author)
+	log.Infof("starting public-holiday-exporter v%s (%s; %s; by %v)", gitTag, gitCommit, runtime.Version(), Author)
 	log.Info(string(opts.GetJson()))
 
 	config := NewAppConfig(opts.ConfigPath)
@@ -40,6 +40,25 @@ func main() {
 		log.Infof("adding country %v with timezone %v", line.Country, line.Timezone)
 		collector.AddCountry(line.Country, line.Timezone)
 	}
+
+	// check if preload only
+	// load data, save to cache and exit
+	if opts.Preload {
+		collector.Preload()
+		if opts.Cache.Path != "" {
+			collector.SaveToCache(opts.Cache.Path)
+		}
+
+		log.Info("preloading finished, exit")
+		os.Exit(0)
+	}
+
+	if opts.Cache.Path != "" {
+		if _, err := os.Stat(opts.Cache.Path); err == nil {
+			collector.LoadFromCache(opts.Cache.Path)
+		}
+	}
+
 	collector.Run()
 
 	log.Infof("listening at %v", opts.ServerBind)

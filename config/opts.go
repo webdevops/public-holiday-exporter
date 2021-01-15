@@ -14,6 +14,13 @@ type (
 			LogJson bool `           long:"log.json"     env:"LOG_JSON" description:"Switch log output to json format"`
 		}
 
+		Cache struct {
+			Path string `long:"cache.path"    env:"CACHE_PATH"      description:"Cache path" default:"cache.json"`
+		}
+
+		// tasks
+		Preload bool `long:"preload" description:"Do cache preload and exit"`
+
 		// general options
 		ServerBind string `long:"bind" env:"SERVER_BIND"   description:"Server address" default:":8080"`
 

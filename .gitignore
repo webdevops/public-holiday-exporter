@@ -2,3 +2,4 @@
 /public-holiday-exporter
 /*.exe
 /.idea
+/cache.json
