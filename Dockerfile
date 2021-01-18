@@ -18,8 +18,12 @@ RUN ./public-holiday-exporter --help
 #############################################
 # FINAL IMAGE
 #############################################
-FROM gcr.io/distroless/static
+FROM alpine:3.12
 ENV LOG_JSON=1
-COPY --from=build /go/src/github.com/webdevops/public-holiday-exporter/public-holiday-exporter /
+RUN apk add bash tzdata
+COPY ./docker/entrypoint.sh /entrypoint.sh
+RUN mkdir /app 
+COPY --from=build /go/src/github.com/webdevops/public-holiday-exporter/public-holiday-exporter /app/
+RUN chown -R 1000:1000 /app
 USER 1000
-ENTRYPOINT ["/public-holiday-exporter"]
+ENTRYPOINT /entrypoint.sh
