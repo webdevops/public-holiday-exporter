@@ -25,6 +25,7 @@ type (
 			publicHolidayActive *prometheus.GaugeVec
 			publicHolidayDate   *prometheus.GaugeVec
 		}
+		config *Config
 	}
 
 	MetricCollectorCountry struct {
@@ -33,32 +34,49 @@ type (
 	}
 )
 
-func NewMetricCollector() *MetricCollector {
+func NewMetricCollector(config *Config) *MetricCollector {
 	collector := &MetricCollector{}
+	collector.config = config
 	collector.Setup()
 	return collector
 }
 
 func (c *MetricCollector) Setup() {
 	c.PublicHolidays = map[string]map[int][]PublicHoliday{}
-
 	c.interval, _ = time.ParseDuration("30m")
 
 	transport := http.Transport{
 		MaxConnsPerHost: 1,
 	}
 
+	var endpoint = "https://date.nager.at"
+	var proxy *string = nil
+
+	if c.config != nil {
+		if c.config.Endpoint != nil {
+			endpoint = *c.config.Endpoint
+		}
+
+		if c.config.Proxy != nil {
+			proxy = c.config.Proxy
+		}
+	}
+
 	c.restClient = resty.New()
 	c.restClient.SetTransport(&transport)
+
+	if proxy != nil {
+		c.restClient.SetProxy(*proxy)
+	}
 	c.restClient.SetHeader("User-Agent", "public-holiday-exporter/"+gitTag)
-	c.restClient.SetHostURL("https://date.nager.at/api/v2/publicholidays/")
+	c.restClient.SetHostURL(fmt.Sprintf("%s/api/v2/publicholidays/", endpoint))
 	c.restClient.SetHeader("Accept", "application/json")
 	c.restClient.SetRetryCount(5)
 	c.restClient.SetRetryMaxWaitTime(60 * time.Second)
 	c.restClient.SetRetryWaitTime(5 * time.Second)
-	c.restClient.AddRetryCondition(resty.RetryConditionFunc(func(r *resty.Response, err error) bool {
+	c.restClient.AddRetryCondition(func(r *resty.Response, err error) bool {
 		return r.StatusCode() == http.StatusTooManyRequests
-	}))
+	})
 
 	c.prometheus.publicHolidayActive = prometheus.NewGaugeVec(
 		prometheus.GaugeOpts{
