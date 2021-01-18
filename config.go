@@ -9,6 +9,8 @@ import (
 type (
 	Config struct {
 		Countries []ConfigCountry `yaml:"countries"`
+		Proxy     *string         `yaml:"proxy,omitempty"`
+		Endpoint  *string         `yaml:"endpoint,omitempty"`
 	}
 
 	ConfigCountry struct {
@@ -18,19 +20,19 @@ type (
 )
 
 func NewAppConfig(path string) (config Config) {
-	var filecontent []byte
+	var fileContent []byte
 
 	config = Config{}
 
 	log.Infof("reading configuration from file %v", path)
 	if data, err := ioutil.ReadFile(path); err == nil {
-		filecontent = data
+		fileContent = data
 	} else {
 		panic(err)
 	}
 
 	log.Info("parsing configuration")
-	if err := yaml.Unmarshal(filecontent, &config); err != nil {
+	if err := yaml.Unmarshal(fileContent, &config); err != nil {
 		panic(err)
 	}
 

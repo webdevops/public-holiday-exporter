@@ -1,6 +1,8 @@
 countries:
   - country: "DE"
     timezone: "Europe/Berlin"
+  - country: "CH"
+    timezone: "Europe/Zurich"
   - country: "FR"
     timezone: "Europe/Paris"
   - country: "GB"
@@ -8,3 +10,5 @@ countries:
   - country: "NZ"
     timezone: "Pacific/Auckland"
 
+# proxy: http://my-proxy:8080
+endpoint: http://127.0.0.1:80

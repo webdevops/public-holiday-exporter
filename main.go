@@ -28,15 +28,15 @@ var (
 var opts config.Opts
 
 func main() {
-	initArgparser()
+	initArgParser()
 
 	log.Infof("starting public-holiday-exporter v%s (%s; %s; by %v)", gitTag, gitCommit, runtime.Version(), Author)
 	log.Info(string(opts.GetJson()))
 
-	config := NewAppConfig(opts.ConfigPath)
+	appConfig := NewAppConfig(opts.ConfigPath)
+	collector := NewMetricCollector(&appConfig)
 
-	collector := NewMetricCollector()
-	for _, line := range config.Countries {
+	for _, line := range appConfig.Countries {
 		log.Infof("adding country %v with timezone %v", line.Country, line.Timezone)
 		collector.AddCountry(line.Country, line.Timezone)
 	}
@@ -68,7 +68,7 @@ func main() {
 
 // init argparser and parse/validate arguments
 
-func initArgparser() {
+func initArgParser() {
 	argparser = flags.NewParser(&opts, flags.Default)
 	_, err := argparser.Parse()
 
