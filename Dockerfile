@@ -27,3 +27,4 @@ COPY --from=build /go/src/github.com/webdevops/public-holiday-exporter/public-ho
 RUN chown -R 1000:1000 /app
 USER 1000
 ENTRYPOINT /entrypoint.sh
+EXPOSE 8080
