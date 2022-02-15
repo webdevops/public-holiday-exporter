@@ -174,6 +174,7 @@ func (c *MetricCollector) SaveToCache(path string) {
 		log.Panic(err)
 	}
 
+	/* #nosec G306 */
 	if err := ioutil.WriteFile(path, data, 0644); err != nil {
 		log.Panic(err)
 	}
@@ -181,7 +182,7 @@ func (c *MetricCollector) SaveToCache(path string) {
 
 func (c *MetricCollector) LoadFromCache(path string) {
 	log.Infof("loading data from cache %v", path)
-	data, err := ioutil.ReadFile(path)
+	data, err := ioutil.ReadFile(path) // #nosec G304
 	if err != nil {
 		log.Panic(err)
 	}
