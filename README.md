@@ -1,5 +1,4 @@
-Public-holiday Exporter
-==================
+# Public-holiday Exporter
 
 [![license](https://img.shields.io/github/license/webdevops/public-holiday-exporter.svg)](https://github.com/webdevops/public-holiday-exporter/blob/master/LICENSE)
 [![DockerHub](https://img.shields.io/badge/DockerHub-webdevops%2Fpublic--holiday--exporter-blue)](https://hub.docker.com/r/webdevops/public-holiday-exporter/)
@@ -7,8 +6,7 @@ Public-holiday Exporter
 
 Prometheus exporter for public-holiday information (countries with timezones...)
 
-Usage
------
+## Usage
 
 ```
 Usage:
@@ -28,14 +26,12 @@ Help Options:
 ```
 
 
-Configuration file
-------------------
+## Configuration file
 
 see [example.yaml](example.yaml)
 
 
-Preload
--------
+## Preload
 
 as date.nager.at has a strict API limit please use the preload feature:
 
@@ -48,8 +44,7 @@ RUN ["/public-holiday-exporter", "--config=/config.yaml", "--preload"]
 
 This will fetch the data for the current and next year and caches it inside the Docker image.
 
-Example metrics
----------------
+## Example metrics
 
 ```
 # HELP publicholiday_date Date (unix timestamp) of public holidays
