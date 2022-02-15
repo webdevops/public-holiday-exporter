@@ -51,7 +51,7 @@ func (c *MetricCollector) Setup() {
 	c.restClient = resty.New()
 	c.restClient.SetTransport(&transport)
 	c.restClient.SetHeader("User-Agent", "public-holiday-exporter/"+gitTag)
-	c.restClient.SetHostURL("https://date.nager.at/api/v2/publicholidays/")
+	c.restClient.SetBaseURL("https://date.nager.at/api/v2/publicholidays/")
 	c.restClient.SetHeader("Accept", "application/json")
 	c.restClient.SetRetryCount(5)
 	c.restClient.SetRetryMaxWaitTime(60 * time.Second)
