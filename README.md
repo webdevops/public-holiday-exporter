@@ -3,6 +3,7 @@
 [![license](https://img.shields.io/github/license/webdevops/public-holiday-exporter.svg)](https://github.com/webdevops/public-holiday-exporter/blob/master/LICENSE)
 [![DockerHub](https://img.shields.io/badge/DockerHub-webdevops%2Fpublic--holiday--exporter-blue)](https://hub.docker.com/r/webdevops/public-holiday-exporter/)
 [![Quay.io](https://img.shields.io/badge/Quay.io-webdevops%2Fpublic--holiday--exporter-blue)](https://quay.io/repository/webdevops/public-holiday-exporter)
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/public-holiday-exporter)](https://artifacthub.io/packages/search?repo=public-holiday-exporter)
 
 Prometheus exporter for public-holiday information (countries with timezones...)
 
