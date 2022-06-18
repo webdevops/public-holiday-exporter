@@ -3,12 +3,13 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/go-resty/resty/v2"
-	"github.com/prometheus/client_golang/prometheus"
-	log "github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
 	"time"
+
+	"github.com/go-resty/resty/v2"
+	"github.com/prometheus/client_golang/prometheus"
+	log "github.com/sirupsen/logrus"
 )
 
 type (
@@ -41,8 +42,7 @@ func NewMetricCollector() *MetricCollector {
 
 func (c *MetricCollector) Setup() {
 	c.PublicHolidays = map[string]map[int][]PublicHoliday{}
-
-	c.interval, _ = time.ParseDuration("30m")
+	c.interval = 30 * time.Minute
 
 	transport := http.Transport{
 		MaxConnsPerHost: 1,
@@ -51,8 +51,11 @@ func (c *MetricCollector) Setup() {
 	c.restClient = resty.New()
 	c.restClient.SetTransport(&transport)
 	c.restClient.SetHeader("User-Agent", "public-holiday-exporter/"+gitTag)
-	c.restClient.SetBaseURL("https://date.nager.at/api/v2/publicholidays/")
+	c.restClient.SetBaseURL(opts.Api.BaseUrl)
 	c.restClient.SetHeader("Accept", "application/json")
+	if opts.Api.Proxy != nil {
+		c.restClient.SetProxy(*opts.Api.Proxy)
+	}
 	c.restClient.SetRetryCount(5)
 	c.restClient.SetRetryMaxWaitTime(60 * time.Second)
 	c.restClient.SetRetryWaitTime(5 * time.Second)

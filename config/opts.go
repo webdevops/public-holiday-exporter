@@ -2,6 +2,7 @@ package config
 
 import (
 	"encoding/json"
+
 	log "github.com/sirupsen/logrus"
 )
 
@@ -12,6 +13,11 @@ type (
 			Debug   bool `           long:"debug"        env:"DEBUG"    description:"debug mode"`
 			Verbose bool `short:"v"  long:"verbose"      env:"VERBOSE"  description:"verbose mode"`
 			LogJson bool `           long:"log.json"     env:"LOG_JSON" description:"Switch log output to json format"`
+		}
+
+		Api struct {
+			BaseUrl string  `long:"api.baseurl"    env:"API_BASEURL"      description:"API base url" default:"https://date.nager.at/api/v2/publicholidays/"`
+			Proxy   *string `long:"api.proxy"      env:"API_PROXY"        description:"API proxy url"`
 		}
 
 		Cache struct {
