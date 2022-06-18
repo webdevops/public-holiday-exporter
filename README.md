@@ -42,7 +42,9 @@ Dockerfile:
 ```
 FROM webdevops/public-holiday-exporter
 COPY example.yaml /config.yaml
+USER 0:0
 RUN ["/public-holiday-exporter", "--config=/config.yaml", "--preload"]
+USER 1000:1000
 ```
 
 This will fetch the data for the current and next year and caches it inside the Docker image.
