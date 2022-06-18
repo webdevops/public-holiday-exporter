@@ -35,7 +35,7 @@ func main() {
 	log.Infof("starting public-holiday-exporter v%s (%s; %s; by %v)", gitTag, gitCommit, runtime.Version(), Author)
 	log.Info(string(opts.GetJson()))
 
-	config := NewAppConfig(opts.ConfigPath)
+	config := NewAppConfig(opts.App.ConfigPath)
 
 	collector := NewMetricCollector()
 	for _, line := range config.Countries {
@@ -51,7 +51,7 @@ func main() {
 
 	// check if preload only
 	// load data, save to cache and exit
-	if opts.Preload {
+	if opts.App.Preload {
 		collector.Preload()
 		if opts.Cache.Path != "" {
 			collector.SaveToCache(opts.Cache.Path)

@@ -24,16 +24,18 @@ type (
 			Path string `long:"cache.path"    env:"CACHE_PATH"      description:"Cache path" default:"cache.json"`
 		}
 
-		// tasks
-		Preload bool `long:"preload" description:"Do cache preload and exit"`
+		App struct {
+			// tasks
+			Preload bool `long:"preload" description:"Do cache preload and exit"`
+
+			ConfigPath string `long:"config" short:"c"  env:"CONFIG"   description:"Config path" required:"true"`
+
+			// exporter settings
+			ExporterDaysToFetchNewYear int64 `env:"DAYS_TO_NEXT_YEAR"   description:"days to next year to fetch also next years data" default:"30"`
+		}
 
 		// general options
 		ServerBind string `long:"bind" env:"SERVER_BIND"   description:"Server address" default:":8080"`
-
-		ConfigPath string `long:"config" short:"c"  env:"CONFIG"   description:"Config path" required:"true"`
-
-		// exporter settings
-		ExporterDaysToFetchNewYear int64 `env:"DAYS_TO_NEXT_YEAR"   description:"days to next year to fetch also next years data" default:"30"`
 	}
 )
 
