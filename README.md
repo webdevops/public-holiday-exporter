@@ -14,18 +14,20 @@ Usage:
   public-holiday-exporter [OPTIONS]
 
 Application Options:
-      --debug        debug mode [$DEBUG]
-  -v, --verbose      verbose mode [$VERBOSE]
-      --log.json     Switch log output to json format [$LOG_JSON]
-      --api.baseurl= API base url (default: https://date.nager.at/api/v2/publicholidays/) [$API_BASEURL]
-      --api.proxy=   API proxy url [$API_PROXY]
-      --cache.path=  Cache path (default: cache.json) [$CACHE_PATH]
-      --preload      Do cache preload and exit
-      --bind=        Server address (default: :8080) [$SERVER_BIND]
-  -c, --config=      Config path [$CONFIG]
+      --debug                 debug mode [$DEBUG]
+  -v, --verbose               verbose mode [$VERBOSE]
+      --log.json              Switch log output to json format [$LOG_JSON]
+      --api.baseurl=          API base url (default: https://date.nager.at/api/v2/publicholidays/) [$API_BASEURL]
+      --api.proxy=            API proxy url [$API_PROXY]
+      --cache.path=           Cache path (default: cache.json) [$CACHE_PATH]
+      --preload               Do cache preload and exit
+  -c, --config=               Config path [$CONFIG]
+      --server.bind=          Server address (default: :8080) [$SERVER_BIND]
+      --server.timeout.read=  Server read timeout (default: 5s) [$SERVER_TIMEOUT_READ]
+      --server.timeout.write= Server write timeout (default: 10s) [$SERVER_TIMEOUT_WRITE]
 
 Help Options:
-  -h, --help         Show this help message
+  -h, --help                  Show this help message
 ```
 
 
