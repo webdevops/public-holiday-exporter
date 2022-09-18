@@ -1,7 +1,7 @@
 package main
 
 import (
-	"io/ioutil"
+	"os"
 
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v2"
@@ -25,7 +25,7 @@ func NewAppConfig(path string) (config Config) {
 
 	log.Infof("reading configuration from file %v", path)
 	/* #nosec G304 */
-	if data, err := ioutil.ReadFile(path); err == nil {
+	if data, err := os.ReadFile(path); err == nil {
 		filecontent = data
 	} else {
 		panic(err)

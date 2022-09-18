@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/go-resty/resty/v2"
@@ -178,14 +178,14 @@ func (c *MetricCollector) SaveToCache(path string) {
 	}
 
 	/* #nosec G306 */
-	if err := ioutil.WriteFile(path, data, 0644); err != nil {
+	if err := os.WriteFile(path, data, 0644); err != nil {
 		log.Panic(err)
 	}
 }
 
 func (c *MetricCollector) LoadFromCache(path string) {
 	log.Infof("loading data from cache %v", path)
-	data, err := ioutil.ReadFile(path) // #nosec G304
+	data, err := os.ReadFile(path) // #nosec G304
 	if err != nil {
 		log.Panic(err)
 	}
@@ -206,7 +206,7 @@ func (c *MetricCollector) ensurePublicHolidays(country string, year int, failOnE
 		}
 
 		if resp.StatusCode() == 200 {
-			publicHolidayList := []PublicHoliday{}
+			var publicHolidayList []PublicHoliday
 			if err := json.Unmarshal(resp.Body(), &publicHolidayList); err != nil {
 				log.Panic(err)
 			}

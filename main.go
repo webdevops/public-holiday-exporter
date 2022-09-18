@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"os"
@@ -35,10 +36,10 @@ func main() {
 	log.Infof("starting public-holiday-exporter v%s (%s; %s; by %v)", gitTag, gitCommit, runtime.Version(), Author)
 	log.Info(string(opts.GetJson()))
 
-	config := NewAppConfig(opts.App.ConfigPath)
+	appConfig := NewAppConfig(opts.App.ConfigPath)
 
 	collector := NewMetricCollector()
-	for _, line := range config.Countries {
+	for _, line := range appConfig.Countries {
 		log.Infof("adding country %v with timezone %v", line.Country, line.Timezone)
 		collector.AddCountry(line.Country, line.Timezone)
 	}
@@ -63,9 +64,8 @@ func main() {
 
 	collector.Run()
 
-	log.Infof("listening at %v", opts.ServerBind)
-	http.Handle("/metrics", promhttp.Handler())
-	log.Fatal(http.ListenAndServe(opts.ServerBind, nil))
+	log.Infof("starting http server on %s", opts.Server.Bind)
+	startHttpServer()
 }
 
 // init argparser and parse/validate arguments
@@ -76,7 +76,8 @@ func initArgparser() {
 
 	// check if there is an parse error
 	if err != nil {
-		if flagsErr, ok := err.(*flags.Error); ok && flagsErr.Type == flags.ErrHelp {
+		var flagsErr *flags.Error
+		if ok := errors.As(err, &flagsErr); ok && flagsErr.Type == flags.ErrHelp {
 			os.Exit(0)
 		} else {
 			fmt.Println()
@@ -115,4 +116,33 @@ func initArgparser() {
 			},
 		})
 	}
+}
+
+// start and handle prometheus handler
+func startHttpServer() {
+	mux := http.NewServeMux()
+
+	// healthz
+	mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		if _, err := fmt.Fprint(w, "Ok"); err != nil {
+			log.Error(err)
+		}
+	})
+
+	// readyz
+	mux.HandleFunc("/readyz", func(w http.ResponseWriter, r *http.Request) {
+		if _, err := fmt.Fprint(w, "Ok"); err != nil {
+			log.Error(err)
+		}
+	})
+
+	mux.Handle("/metrics", promhttp.Handler())
+
+	srv := &http.Server{
+		Addr:         opts.Server.Bind,
+		Handler:      mux,
+		ReadTimeout:  opts.Server.ReadTimeout,
+		WriteTimeout: opts.Server.WriteTimeout,
+	}
+	log.Fatal(srv.ListenAndServe())
 }
